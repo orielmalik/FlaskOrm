@@ -1,0 +1,3 @@
+ UPDATE Players
+                SET position = %s, speed = %s, birth = %s, type = %s
+                WHERE email = %s|
