@@ -40,11 +40,7 @@ class MySqlService():
                 conn = create_connection()
                 cursor = conn.cursor()
 
-                update_query = """
-                UPDATE Players
-                SET position = %s, speed = %s, birth = %s, type = %s
-                WHERE email = %s
-                """
+                update_query = readTextFile("Update.txt","Queries").split("|")[0]
                 cursor.execute(update_query, (player._Player__position, player._Player__speed,
                                               player._Player__birth, player._Player__type, player._Player__email))
                 conn.commit()
