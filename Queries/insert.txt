@@ -1,4 +1,4 @@
 
 INSERT INTO Players (email, position, speed, birth, type)
-            VALUES (%s, %s, %s, %s, %s)|
+            VALUES (%s, %s, %s, %s, %s)  |
 

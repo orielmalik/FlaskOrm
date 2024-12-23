@@ -24,7 +24,6 @@ class mysqldb:
         self.cursor = self.conn.cursor()
 
     def ensure_connection(self):
-        """בודק אם החיבור עדיין פעיל ואם לא, מחבר מחדש"""
         try:
             self.conn.ping(reconnect=True)  # בודק אם החיבור פעיל ואם לא, מחבר מחדש
         except pymysql.MySQLError:

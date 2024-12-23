@@ -1,0 +1,2 @@
+SELECT * FROM Players|
+SELECT * FROM players where email =% |

@@ -27,14 +27,20 @@ def reguler():
             return jsonify({"error": "Invalid email address"}), 401
 
         player = from_json(json_data, ['email', 'position', 'speed', 'birth', 'type'])
+        try:
+            b = cl.insert_player(tuple=player.to_tuple())
+            if b:
+                return jsonify({"succ":cl.getplayersByOptions(1,str(json_data['email'])) }), 200
+            else:
+                return jsonify({"error": "error in"}), 404
 
-        cl.insert_player(tuple=player.to_tuple())
-        # Fetch all players after successful insertion
-        all_players = cl.server.fetch("all")
-        return jsonify({"succ": all_players}), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}),404
+
 
 
 atexit.register(stop_docker)
 
 if __name__ == '__main__':
     app.run()
+    cl.server.ensure_connection()
