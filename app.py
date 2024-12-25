@@ -25,7 +25,6 @@ def reguler():
         print(json_data)
         if not validate_email(json_data['email']):
             return jsonify({"error": "Invalid email address"}), 401
-
         player = from_json(json_data, ['email', 'position', 'speed', 'birth', 'type'])
         try:
             b = cl.insert_player(tuple=player.to_tuple())
@@ -37,6 +36,12 @@ def reguler():
         except Exception as e:
             return jsonify({"error": str(e)}),404
 
+    elif request.method == 'DELETE':
+        try:
+            cl.delete_player(condition='email = %s',email=request.args.get('id'))
+            return jsonify({"deleted":True}),200
+        except Exception as e:
+            return jsonify({"deleted",True}),400
 
 
 atexit.register(stop_docker)

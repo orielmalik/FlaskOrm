@@ -31,3 +31,20 @@ class Player:
 
     def fromTuple(myTuple: tuple):
         return Player(myTuple[0], myTuple[1], myTuple[2], myTuple[3], myTuple[4])
+
+    def setByOption(self, opt, value):
+        if not isinstance(value, str):
+            raise ValueError(f"err")
+        if opt == 'birth':
+            try:
+                self.__birth = string_to_date(value)
+            except ValueError as e:
+                raise ValueError(f"err")
+        elif opt == 'position':
+            self.__position = value
+        elif opt == 'type':
+            self.__type = value
+        elif opt == 'speed':
+            self.__speed = value
+        else:
+            raise ValueError(f"err")

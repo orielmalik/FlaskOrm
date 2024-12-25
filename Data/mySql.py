@@ -33,6 +33,7 @@ class mysqldb:
 
     def exec(self, query, params=None):
         self.ensure_connection()
+        print(f"{query}{params}")
         self.cursor.execute(query, params)
 
     def commit(self):

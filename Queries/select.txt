@@ -1,2 +1,2 @@
-SELECT * FROM Players|
-SELECT * FROM players where email =% |
+SELECT * FROM Players
+SELECT * FROM Players where email = %s
