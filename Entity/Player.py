@@ -2,7 +2,7 @@ import json
 from datetime import date
 from Utils.Validation import *
 
-
+#SqlAlchemy
 class Player:
     def __init__(self, email, position, speed, birth, type):
         self.__email = email
@@ -10,6 +10,7 @@ class Player:
         self.__speed = speed
         self.__birth = birth
         self.__type = type
+
 
     def to_json(self):
         try:
@@ -29,8 +30,6 @@ class Player:
     def to_tuple(self):  # email, position, speed, birth, type)
         return self.__email, self.__position, self.__speed, self.__birth, self.__type
 
-    def fromTuple(myTuple: tuple):
-        return Player(myTuple[0], myTuple[1], myTuple[2], myTuple[3], myTuple[4])
 
     def setByOption(self, opt, value):
         if not isinstance(value, str):

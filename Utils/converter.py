@@ -4,6 +4,9 @@ from Utils.Validation import *
 from Entity.Player import *
 
 
+def fromTuple(myTuple: tuple):
+    return Player(myTuple[0], myTuple[1], myTuple[2], myTuple[3], myTuple[4])
+
 def string_to_date(date_string):
     """
     Converts a string representing a date to a datetime object.
@@ -56,3 +59,7 @@ def from_json(json_data, required_fields):
         birth=birth_date,
         type=data['type']
     )
+
+
+
+

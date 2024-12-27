@@ -25,7 +25,7 @@ class mysqldb:
 
     def ensure_connection(self):
         try:
-            self.conn.ping(reconnect=True)  # בודק אם החיבור פעיל ואם לא, מחבר מחדש
+            self.conn.ping(reconnect=True)
         except pymysql.MySQLError:
             print("Lost connection, reconnecting...")
             self.conn = create_connection()

@@ -1,0 +1,1 @@
+req_fields=['email', 'position', 'speed', 'birth', 'type']
