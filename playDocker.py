@@ -12,12 +12,14 @@ def start_docker():
     subprocess.run(["docker-compose", "up", "--build", "-d"])
 
 
+
 def stop_docker(conn, alch):
     print("Stopping Docker containers...")
     if isinstance(conn, pymysql.connect) and is_connection_active(conn) :
         conn.close()
     if isinstance(alch, Session):
         alch.close()
+        print("Stopping")
     subprocess.run(["docker-compose", "down"])
 
 

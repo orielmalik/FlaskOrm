@@ -1,5 +1,7 @@
 import json
 from datetime import datetime
+
+from Entity.PlayerAlchemy import PlayerAlchemy,AlchemyEncoder
 from Utils.Validation import *
 from Entity.Player import *
 
@@ -31,7 +33,7 @@ def string_to_date(date_string):
         raise ValueError("Invalid date string format.")
 
 
-def from_json(json_data, required_fields):
+def from_json(json_data, required_fields,type=''):
     if isinstance(json_data, dict):
         # If json_data is already a dictionary, no need to load it
         data = json_data
@@ -43,8 +45,12 @@ def from_json(json_data, required_fields):
     else:
         raise TypeError("json_data must be a dictionary or a string")
 
+    if not isinstance(required_fields, list) or not isinstance(data['speed'],float):
+        raise ValueError("err")
+
     for field in required_fields:
         if field not in data:
+            print(field)
             raise ValueError(f"Missing field: {field}")
 
     try:
@@ -52,13 +58,24 @@ def from_json(json_data, required_fields):
     except (ValueError, TypeError) as e:
         raise ValueError(f"Error parsing birthdate: {e}")
 
-    return Player(
-        email=data['email'],
-        speed=data['speed'],
-        position=data['position'],
-        birth=birth_date,
-        type=data['type']
-    )
+
+    if type is 'alch':
+        return  PlayerAlchemy(
+    email=data['email'],
+    position=data['position'],
+    speed=data['speed'],
+    birth=birth_date,
+    type=data['speed']
+)
+
+    else:
+        return Player(
+            email=data['email'],
+            speed=data['speed'],
+            position=data['position'],
+            birth=birth_date,
+            type=data['type']
+        )
 
 
 

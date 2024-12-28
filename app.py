@@ -1,12 +1,11 @@
+import json
 from flask import Flask, request, jsonify, Response
-
-from Utils.converter import from_json
+from Utils.const import *
 from Utils.Validation import *
 from playDocker import *
 from Service.MySqlService import *
 import atexit
-from Service.AlchemyService import *
-from Entity import Player, PlayerAlchemy
+from Service.AlchemyService import from_json, AlchemyService, to_dict
 
 app = Flask(__name__)
 
@@ -51,14 +50,19 @@ def reguler():
 def orm():
     if request.method == 'POST':
         try:
-            return jsonify({"OK": alchemy.createPlayer(from_json(request.get_json()))}), 200
-        except Exception as e:
-            return jsonify("erorr", str(e)), 400
-        # return Response(alchemy.getPlayers(), mimetype="text/event-stream")
+            target = request.get_json()  # מקבל את הנתונים מה-Request
 
+            return jsonify(to_dict(alchemy.create_player(target))), 200
+        except Exception as e:
+            return jsonify({"error": str(e)}), 400
+        # return Response(alchemy.getPlayers(), mimetype="text/event-stream")
     elif request.method == 'DELETE':
         try:
-            alchemy.deletePlayer(request.args.get('id'))
+            if request.args.get('id'):
+                alchemy.deletePlayer(request.args.get('id'))
+                return jsonify({"OK": True}), 200
+            else:
+                alchemy.deletePlayers("TRUNCATE TABLE player")
             return jsonify({"success": True}), 200
         except TypeError:
             return jsonify({"success": True}), 400

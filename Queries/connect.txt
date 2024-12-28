@@ -1,1 +1,1 @@
-mysql+pymysql://root:navigator@localhost:3306/player_db
+mysql+pymysql://root:navigator@localhost:3307/player_db
