@@ -1,9 +1,9 @@
-import json
-from sqlalchemy import create_engine, Column, Integer, String, Date, Float
+from sqlalchemy import create_engine, Column, String, Date, Float
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from Utils.FileUtils import *
+from Queries.Security import decrypt_message
 
 Base = declarative_base()
 
@@ -20,13 +20,12 @@ class PlayerAlchemy(Base):
 
     @classmethod
     def get_session(cls):
-        engine = create_engine(readTextFile('connect.txt', 'Queries').strip())
+        engine = create_engine((readTextFile('connect.txt').split('\n')[0]))
         session_factory = sessionmaker(bind=engine)
         Base.metadata.create_all(engine)
         return session_factory()
 
 
-# Encoder כדי להמיר את אובייקטי SQLAlchemy ל-JSON
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj.__class__, DeclarativeMeta):

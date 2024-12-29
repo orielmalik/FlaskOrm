@@ -1,3 +1,4 @@
+import json
 import os
 
 def readTextFile(file_name, search_root="."):
@@ -63,5 +64,11 @@ def writeExistTextFile(file_name, search_root=".", content=""):
         return True
 
     except Exception as e:
-        print(f"Error: {e}")
-        return False
+            print(f"Error: {e}")
+            return False
+
+
+def insertJson(dir_):
+    with open(dir_, "r", encoding="utf-8") as file:
+        print(dir_)
+        return json.load(file)

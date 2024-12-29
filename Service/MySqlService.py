@@ -1,7 +1,6 @@
 from Data.mySql import *
-from Entity import Player
-from Utils.FileUtils import *
 from Utils.Validation import *
+from Queries.Security import *
 
 
 class MySqlService():
@@ -13,7 +12,7 @@ class MySqlService():
     def createPlayeTBL(self):
         self.server.ensure_connection()
         try:
-            create_table_query = readTextFile('Create.txt', "Queries").split("|")[0]
+            create_table_query = (readTextFile('Create.txt', "Queries")).split("|")[0]
             print(create_table_query)
             self.server.exec(create_table_query)
             self.server.commit()
@@ -34,7 +33,7 @@ class MySqlService():
             conn = create_connection()  # ensure connection
             cursor = conn.cursor()
 
-            insert_query = readTextFile("insert.txt", "Queries").split("|")[0]
+            insert_query = (readTextFile("insert.txt", "Queries")).split("|")[0]
 
             cursor.execute(insert_query, tuple)
             conn.commit()
@@ -49,19 +48,19 @@ class MySqlService():
 
     def getplayersByOptions(self, opt, value):
         try:
-            res = self.server.exec(readTextFile("select.txt", "Queries").split('\n')[opt], value)
+            res = self.server.exec((readTextFile("select.txt", "Queries")).split('\n')[opt], value)
             return res
         except Exception as e:
             raise e
 
-    def update_player(self, player,):
+    def update_player(self, player, ):
         try:
             conn = create_connection()
             cursor = conn.cursor()
             target = self.getplayersByOptions(1, player.__email)
-            if target is None or not isinstance(target,tuple) or not len(target) == 1:
+            if target is None or not isinstance(target, tuple) or not len(target) == 1:
                 raise ValueError("Invalid email")
-            update_query = readTextFile("Update.txt", "Queries").split("|")[0]
+            update_query = (readTextFile("Update.txt", "Queries")).split("|")[0]
             cursor.execute(update_query, (target["position"], target["speed"],
                                           target["birth"], target["type"], target["email"]))
             conn.commit()
@@ -73,6 +72,6 @@ class MySqlService():
 
     def delete_player(self, condition='', email=''):
         try:
-            self.server.exec(readTextFile('Delete.txt', 'Queries').split('\n')[0] + "  " + condition, params=email)
+            self.server.exec((readTextFile('Delete.txt', 'Queries')).split('\n')[0] + "  " + condition, params=email)
         except Exception as e:
             raise e

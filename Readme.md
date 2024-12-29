@@ -2,15 +2,21 @@
 
 This is an ongoing Flask project where we are exploring and researching various libraries for both SQL and No-SQL databases, while integrating Pytest for testing. The project aims to evaluate and compare different database libraries and setups for future use in a production environment.
 
+**Requirements of Project**:
+- Docker Desktop and Compose.yaml file
+- Log file
+- Decrypt data if needed
 
-## Database Security
 
-This project establishes a direct connection to `pymysql` while ensuring robust protection against SQL injection and XSS attacks. Key security features include:
-This project   establishes a direct connection to `pymysql` while ensuring robust protection against SQL injection and XSS attacks. Key security features include:
 
 
 
 ORM VS DIRECT COMMANDS
+
+- **SQLAlchemy**:
+ is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL **
+
+- **pyMysql**: This package contains a pure-Python MySQL client library, based on PEP 249. Requirements : MySQL Server
 
 
 SECURITY

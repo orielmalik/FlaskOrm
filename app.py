@@ -40,7 +40,10 @@ def reguler():
 
     elif request.method == 'DELETE':
         try:
-            cl.delete_player(condition='email = %s', email=request.args.get('id'))
+            if request.args.get('id'):
+                cl.delete_player(condition='email = %s', email=request.args.get('id'))
+            else:
+                cl.server.exec("TRUNCATE TABLE Players")
             return jsonify({"deleted": True}), 200
         except Exception as e:
             return jsonify({"deleted", True}), 400
@@ -51,8 +54,7 @@ def orm():
     if request.method == 'POST':
         try:
             target = request.get_json()  # מקבל את הנתונים מה-Request
-
-            return jsonify(to_dict(alchemy.create_player(target))), 200
+            return jsonify({"ok":(alchemy.create_player(target))}), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 400
         # return Response(alchemy.getPlayers(), mimetype="text/event-stream")
@@ -69,7 +71,7 @@ def orm():
 
     elif request.method == 'PUT':
         try:
-            return jsonify({"success": alchemy.updatePlayer(request.get_json())}), 200
+            return jsonify({"success":to_dict(alchemy.updatePlayer(request.get_json()))}), 200
         except Exception as ex:
             return jsonify({"success": str(ex)}), 400
 

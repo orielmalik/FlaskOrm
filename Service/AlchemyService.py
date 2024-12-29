@@ -12,7 +12,6 @@ from Utils.converter import *
 
 
 def to_dict(selfi):
-
     return {
         "email": selfi.email,
         "position": selfi.position,
@@ -40,25 +39,28 @@ class AlchemyService:
 
     def create_player(self,target):
         try:
-            # יצירת אובייקט PlayerAlchemy
-            player = from_json(target, req_fields, type='alch')  # ודא שזו פונקציה תקינה
+            player = from_json(target, req_fields, type='alch')
             player_dict = to_dict(player)
 
-            # בדיקת אימייל ובדיקת קיום הרשומה
             if not validate_email(player_dict['email']):
                 raise TypeError("Invalid email")
             existing_player = self.server.query(PlayerAlchemy).filter_by(email=player_dict['email']).first()
             if existing_player is not None:
                 raise TypeError("Player already exists")
 
-            # הוספת השחקן למסד
             new_player = PlayerAlchemy(**player_dict)
             self.server.add(new_player)
             self.server.commit()
 
-            # שליפת השחקן
-            return json.dumps(  self.server.query(PlayerAlchemy).filter_by(email=player_dict['email']).first(),cls=AlchemyEncoder)
+            result = self.server.get(PlayerAlchemy,player_dict['email'])
 
+            if result is None:
+                print(f"non")
+
+                raise ValueError(f"No player found with email: {player_dict['email']}")
+
+            # Serialize using AlchemyEncoder
+            return json.dumps(result, cls=AlchemyEncoder)
         except (SQLAlchemyError, TypeError) as e:
             print(f"Error: {str(e)}")
             raise TypeError("An error occurred while adding the player")
