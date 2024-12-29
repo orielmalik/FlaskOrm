@@ -1,7 +1,7 @@
 from Data.mySql import *
 from Utils.Validation import *
-from Queries.Security import *
-
+from Utils.FileUtils import  *
+from Utils.log.logg import printer
 
 class MySqlService():
     def __init__(self):
@@ -37,6 +37,7 @@ class MySqlService():
 
             cursor.execute(insert_query, tuple)
             conn.commit()
+            cursor.execute(readTextFile("select.txt").split('\n')[1], tuple)
             return cursor.fetchone()
 
         except pymysql.MySQLError as e:
@@ -64,14 +65,17 @@ class MySqlService():
             cursor.execute(update_query, (target["position"], target["speed"],
                                           target["birth"], target["type"], target["email"]))
             conn.commit()
-
+            printer(update_query)
             cursor.close()
             conn.close()
+            printer("closed","INFO")
+
         except pymysql.MySQLError as e:
-            print(f"Error updating player: {e}")
+            printer(f"Error updating player: {e}","ERROR")
 
     def delete_player(self, condition='', email=''):
         try:
             self.server.exec((readTextFile('Delete.txt', 'Queries')).split('\n')[0] + "  " + condition, params=email)
-        except Exception as e:
-            raise e
+        except pymysql.MySQLError as e:
+            printer(f"Error deleting player: {e}","ERROR")
+            raise TypeError("err")

@@ -1,1 +1,1 @@
-mysql+pymysql://root:navigator@localhost:3307/player_db
+gAAAAABncchpuxCnBbnqdpcwxaYdwCUb2R2eguIEHOk20K3vTucnRsy60xmqaWoNcME0aCm6_0mEU2eUKibkb0DPtcsJFbM6ZGaHcsjNLC8ZigPjhmbbUXlf2sdxBxi2ORkyX9lutg5apaNfcSEDkI9heTEB-BwNyA==

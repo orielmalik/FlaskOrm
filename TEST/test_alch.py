@@ -9,7 +9,7 @@ from Utils.FileUtils import insertJson
 
 class TestAlchemy:
     counterSameObject = {"value", 0}
-    res = requests.delete("http://localhost:5000/alchemy")  # delete alll before
+    res = requests.delete("http://localhost:5000/alchemy")
 
     json_cases = [lambda file_: insertJson(file_) for file_ in os.listdir(os.path.join(os.getcwd(), "jfiles"))]
 

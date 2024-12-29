@@ -1,3 +1,1 @@
- UPDATE Players
-                SET position = %s, speed = %s, birth = %s, type = %s
-                WHERE email = %s|
+gAAAAABncchpCtS0w-XLsyOi6-7H6DI2PbPo-UF6oHTUo0nkPsr5Q65Fixz_RP4jWPoN11llQkzX-Z5FQzvDOxMmMLfyCL9rEodSk70reCstc0jdPSquSIO5KaRCjAnQmfxUx2fVOofYmgfuwEFM5PeZndxnCmu43GF6qJ4PmRTRL4Rv_SOmD9fxtdR3zhWXJqmKtbQXzNz3ZET_D-ilTJqpK1D-tjhTvwvJIDVnYESRf5fdIMM0G8w=

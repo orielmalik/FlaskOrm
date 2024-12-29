@@ -1,17 +1,14 @@
 import json
 import os
+from Keys.Security import decrypt_message
+from Utils.const import key
+
 
 def readTextFile(file_name, search_root="."):
-    """
-    Reads the content of a text file.
+    return decrypt_message(readTextFileReg(search_root=search_root, file_name=file_name))
 
-    Args:
-        file_name: The name of the file to read.
-        search_root: The root directory to search for the file. Defaults to the current directory.
 
-    Returns:
-        The content of the file as a string if found, otherwise an empty string.
-    """
+def readTextFileReg(file_name, search_root="."):
     for root, dirs, files in os.walk(search_root):
         if file_name in files:
             file_path = os.path.join(root, file_name)
@@ -64,8 +61,8 @@ def writeExistTextFile(file_name, search_root=".", content=""):
         return True
 
     except Exception as e:
-            print(f"Error: {e}")
-            return False
+        print(f"Error: {e}")
+        return False
 
 
 def insertJson(dir_):

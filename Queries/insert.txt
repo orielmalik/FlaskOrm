@@ -1,4 +1,1 @@
-
-INSERT INTO Players (email, position, speed, birth, type)
-            VALUES (%s, %s, %s, %s, %s)  |
-
+gAAAAABncchp7TZp7Z-7YoakuaPWoTxQtYJLcJzt18oO4dkqL4aJ1xmbKc_1HMG18WBwOyvo4H4AvijuRrH-G-Y_9weGKS3kKxLgUPCsIfRPOTuRkl8Ai2pcRhWOumKymLEFAvcttsv05YfTnyx4qRUv5Wk4l1vtHUmU6jCqDchJukK_N8Of2GIpIcNqZLmqBVZcB1bxhsLo7q2zNNoDeRCm1qpmIG-ASQ==

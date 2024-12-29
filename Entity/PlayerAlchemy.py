@@ -3,7 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from Utils.FileUtils import *
-from Queries.Security import decrypt_message
 
 Base = declarative_base()
 

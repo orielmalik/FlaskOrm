@@ -9,6 +9,8 @@ from Utils.Validation import *
 from Utils.FileUtils import *
 from Entity import Player
 from Utils.converter import *
+from Utils.log import logg
+from Utils.log.logg import printer
 
 
 def to_dict(selfi):
@@ -50,27 +52,34 @@ class AlchemyService:
 
             new_player = PlayerAlchemy(**player_dict)
             self.server.add(new_player)
+            printer(f"added new player: {new_player}")
+
             self.server.commit()
+            printer(f"commit")
 
             result = self.server.get(PlayerAlchemy,player_dict['email'])
 
             if result is None:
-                print(f"non")
+                printer(f"No player found with email: {player_dict['email']}","ERROR")
 
                 raise ValueError(f"No player found with email: {player_dict['email']}")
 
             # Serialize using AlchemyEncoder
             return json.dumps(result, cls=AlchemyEncoder)
         except (SQLAlchemyError, TypeError) as e:
-            print(f"Error: {str(e)}")
+            printer(f"Error: {str(e)}","ERROR")
             raise TypeError("An error occurred while adding the player")
 
     def updatePlayer(self, target):
         self.raise_Error(self.server, Session, "error")
         if not target['email'] or not validate_email(target['email']) or not self.server.get(target['email']):
+            printer(f"Error","ERROR")
             raise TypeError("error")
         self.server.merge(from_json(target, req_fields))
         self.server.commit()
+        printer(f"commit" )
+
+
         return self.server.get(target['email'])
 
     def deletePlayer(self, target):
@@ -79,9 +88,13 @@ class AlchemyService:
         if not validate_email(target['email']) or not self.server.get(target['email']):
             raise TypeError("error")
         self.server.delete(target)
+        printer(f"deleted: {target['email']}")
         self.server.commit()
+        printer(f"commit")
 
     def deletePlayers(self,query):
         self.server.execute(text(str(query)))
         self.server.commit()
+        printer(f"deleteds:")
+
 

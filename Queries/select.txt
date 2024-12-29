@@ -1,2 +1,1 @@
-SELECT * FROM Players
-SELECT * FROM Players where email = %s
+gAAAAABncchp6CtKT7Ty3-leXB0NylMZlMiwIWpekTFju8pAXLPp-7I_YI3kgG_3kBQzrIVzp-LITL2R8hPe4OLRX2CxEji1Bz9M4HcwGMZLsJ_LbuhtqOE6igp_pfdEBGcq-JDVBbktOT9blIIcUWOGfeu1xgZzxQ==

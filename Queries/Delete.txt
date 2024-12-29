@@ -1,1 +1,1 @@
-DELETE FROM Players WHERE
+gAAAAABncchpCk8Pu5-bENgOq3vnzuevtvX5q7X82mrscwbnLQVIfWcTvPP3Qcr6gTggLDLiU-jeq77jbZCQvPEpS6eZvvOkklHoa3m7hTUB4pqeel18gCI=

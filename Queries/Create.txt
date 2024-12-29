@@ -1,7 +1,1 @@
-CREATE TABLE IF NOT EXISTS Players (
-                           email VARCHAR(250) PRIMARY KEY,
-                           birth DATE,
-                           position VARCHAR(250),
-                           speed FLOAT,
-                           type VARCHAR(250)
-                       ) |
+gAAAAABncchpqmfABdU7jpKaN-QB5YUZwDflu4_KReZe0aWWK9fJASWJTBq-v_59xQ1b22utmvvuVs2jKjszoPQSYh90bpf9vnsKYQvTFdklsUmLxTgMAydplLkE1bjXGhSKStCVwy49aOVCpN7eu_ZDePgNRMSVmiL-f59y4YZK9bRSZFqRgZT5stu2Lc8XlJd3ACdvb2CDEJuZI4Kqc1UcZ9Zvdn4FwIUNmWVliP6aUCXjwvsqyAmVtxY17qisjXfexQtwhvLCn-3P2pHSKFn4ePQIqTFCfK-PLmCmJfFZM9-9Z1S9QAGZn656Cq8lbV3iwFPu6UDyQdOKScECAwbLI1HA4kZBmZgkQX-fd3acI71B_rQOKhpuzI-IAVRQUnQJkC3YVeMV7zfNditj4n9L0RTRbIrELTEcSIcRBAlB5pwJz1sZaE63OvrB7Wl2C14ZleliqYJ8CyDvTzC4SceQpj1BCkb5vw==

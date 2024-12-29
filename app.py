@@ -24,19 +24,17 @@ def hello_world():  # put application's code here
 def reguler():
     if request.method == 'POST':
         json_data = request.get_json()
-        print(json_data)
+        printer(json_data,"INFO")
         if not validate_email(json_data['email']):
             return jsonify({"error": "Invalid email address"}), 401
-        player = from_json(json_data, ['email', 'position', 'speed', 'birth', 'type'])
+        player = from_json(json_data, req_fields)
         try:
-            b = cl.insert_player(tuple=player.to_tuple())
-            if b:
-                return jsonify({"succ": cl.getplayersByOptions(1, str(json_data['email']))}), 200
-            else:
-                return jsonify({"error": "error in"}), 404
-
+            k = cl.insert_player(tuple=player.to_tuple())
+            if not k:
+                return jsonify({"error": "err"}), 404
+            return jsonify(json.dumps(k)), 200
         except Exception as e:
-            return jsonify({"error": str(e)}), 404
+            return jsonify({"error": "err"}), 404
 
     elif request.method == 'DELETE':
         try:
