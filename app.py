@@ -1,7 +1,10 @@
 import json
 from flask import Flask, request, jsonify, Response
+
+from Data.mongodb import MongoDB
 from Utils.const import *
 from Utils.Validation import *
+from Utils.converter import from_tuple
 from playDocker import *
 from Service.MySqlService import *
 import atexit
@@ -13,6 +16,8 @@ start_docker()
 alchemy = AlchemyService()
 cl = MySqlService()
 cl.createPlayeTBL()
+mongo = MongoDB()
+mongo.initlz(app)
 
 
 @app.route('/')
@@ -24,15 +29,13 @@ def hello_world():  # put application's code here
 def reguler():
     if request.method == 'POST':
         json_data = request.get_json()
-        printer(json_data,"INFO")
+        printer(json_data, "INFO")
         if not validate_email(json_data['email']):
             return jsonify({"error": "Invalid email address"}), 401
         player = from_json(json_data, req_fields)
         try:
-            k = cl.insert_player(tuple=player.to_tuple())
-            if not k:
-                return jsonify({"error": "err"}), 404
-            return jsonify(json.dumps(k)), 200
+            k = cl.insert_player(player_data=player.to_tuple())
+            return jsonify({"ok:": k}), 200
         except Exception as e:
             return jsonify({"error": "err"}), 404
 
@@ -52,7 +55,7 @@ def orm():
     if request.method == 'POST':
         try:
             target = request.get_json()  # מקבל את הנתונים מה-Request
-            return jsonify({"ok":(alchemy.create_player(target))}), 200
+            return jsonify({"ok": (alchemy.create_player(target))}), 200
         except Exception as e:
             return jsonify({"error": str(e)}), 400
         # return Response(alchemy.getPlayers(), mimetype="text/event-stream")
@@ -69,7 +72,7 @@ def orm():
 
     elif request.method == 'PUT':
         try:
-            return jsonify({"success":to_dict(alchemy.updatePlayer(request.get_json()))}), 200
+            return jsonify({"success": to_dict(alchemy.updatePlayer(request.get_json()))}), 200
         except Exception as ex:
             return jsonify({"success": str(ex)}), 400
 
@@ -78,4 +81,3 @@ atexit.register(stop_docker, cl.server.conn, alchemy.getServer())
 
 if __name__ == '__main__':
     app.run()
-    cl.server.ensure_connection()

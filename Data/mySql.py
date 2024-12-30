@@ -1,5 +1,7 @@
 import pymysql
 
+from Utils.log.logg import printer
+
 
 def create_connection():
     try:
@@ -33,7 +35,7 @@ class mysqldb:
 
     def exec(self, query, params=None):
         self.ensure_connection()
-        print(f"{query}{params}")
+        printer(f"{query}{params}")
         self.cursor.execute(query, params)
 
     def commit(self):

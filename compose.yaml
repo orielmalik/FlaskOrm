@@ -20,6 +20,10 @@ services:
   mongodb:
     image: mongo:latest
     container_name: mongodb-container
+    environment:
+      - 'MONGO_INITDB_DATABASE=dbplayer'
+      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
+      - 'MONGO_INITDB_ROOT_USERNAME=root'
     volumes:
       - mongodb_data:/data/db
     ports:

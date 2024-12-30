@@ -2,10 +2,13 @@ import json
 import os
 from Keys.Security import decrypt_message
 from Utils.const import key
+from Utils.log.logg import printer
 
 
 def readTextFile(file_name, search_root="."):
-    return decrypt_message(readTextFileReg(search_root=search_root, file_name=file_name))
+    res = decrypt_message(readTextFileReg(search_root=search_root, file_name=file_name))
+    printer("read:  "+res)
+    return res
 
 
 def readTextFileReg(file_name, search_root="."):

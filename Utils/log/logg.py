@@ -2,21 +2,24 @@ import logging
 from datetime import datetime
 
 
+# הגדרת הלוגר הגלובלי
 def setup_logger():
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
+    logger = logging.getLogger('app_logger')  # נותנים שם ללוגר כדי שיהיה קל יותר למצוא אותו
+    logger.setLevel(logging.DEBUG)  # מגדירים את רמת הלוג
     file_handler = logging.FileHandler('app.log')
     file_handler.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
-    logger.info(f"STARTS AT {datetime.now()}")
     return logger
 
 
-def printer(message,log_type="DEBUG"):
-    logger = setup_logger()
-    if log_type == "DEBUG" or log_type.strip is "":
+# יצירת לוגר גלובלי כך שנשתמש בו בכל הפונקציות
+logger = setup_logger()
+
+
+def printer(message, log_type="DEBUG"):
+    if log_type == "DEBUG" or log_type.strip() == "":
         logger.debug(message)
     elif log_type == "INFO":
         logger.info(message)
@@ -28,5 +31,3 @@ def printer(message,log_type="DEBUG"):
         logger.critical(message)
     else:
         logger.info("Unknown log type: %s", log_type)
-
-

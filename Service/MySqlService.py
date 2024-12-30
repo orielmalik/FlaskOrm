@@ -1,7 +1,8 @@
 from Data.mySql import *
 from Utils.Validation import *
-from Utils.FileUtils import  *
+from Utils.FileUtils import *
 from Utils.log.logg import printer
+
 
 class MySqlService():
     def __init__(self):
@@ -21,31 +22,30 @@ class MySqlService():
             print(f"Error creating Players table: {e}")
             raise
 
-    def insert_player(self, tuple):
-        if not validate_email(tuple[0]):
+    def insert_player(self, player_data):
+        self.server.ensure_connection()
+        """
+        data=( self.__email, self.__position, self.__speed, self.__birth, self.__type)
+        """
+        if not validate_email(player_data[0]) or not isinstance(player_data,tuple):
             raise TypeError("Invalid email")
+
+        self.raiseGet(1, player_data[0])
         try:
-            print("Checking if player exists...")
-            b = self.getplayersByOptions(1, tuple[0])
-            if b is None:
-                raise TypeError("Invalid email")
+            insert_query = readTextFile("insert.txt", "Queries").split("|")[0].strip()
+            printer(insert_query)
 
-            conn = create_connection()  # ensure connection
-            cursor = conn.cursor()
+            self.server.exec(insert_query, player_data)
+            # Commit the transaction
+            self.server.conn.commit()
 
-            insert_query = (readTextFile("insert.txt", "Queries")).split("|")[0]
-
-            cursor.execute(insert_query, tuple)
-            conn.commit()
-            cursor.execute(readTextFile("select.txt").split('\n')[1], tuple)
-            return cursor.fetchone()
-
-        except pymysql.MySQLError as e:
-            print(f"Error inserting player: {e}")
-            import traceback
-            traceback.print_exc()
-
-        return False
+            # Fetch the inserted player for confirmation
+            select_query = readTextFile("select.txt").split('\n')[1].strip()
+            self.server.exec(select_query, player_data[0])
+            return self.server.cursor.fetchone()
+        except Exception as e:
+            printer(f"Error occurred: {e}")
+            raise
 
     def getplayersByOptions(self, opt, value):
         try:
@@ -56,7 +56,7 @@ class MySqlService():
 
     def update_player(self, player, ):
         try:
-            conn = create_connection()
+            conn = self.server.conn()
             cursor = conn.cursor()
             target = self.getplayersByOptions(1, player.__email)
             if target is None or not isinstance(target, tuple) or not len(target) == 1:
@@ -68,14 +68,25 @@ class MySqlService():
             printer(update_query)
             cursor.close()
             conn.close()
-            printer("closed","INFO")
+            printer("closed", "INFO")
 
         except pymysql.MySQLError as e:
-            printer(f"Error updating player: {e}","ERROR")
+            printer(f"Error updating player: {e}", "ERROR")
 
     def delete_player(self, condition='', email=''):
         try:
             self.server.exec((readTextFile('Delete.txt', 'Queries')).split('\n')[0] + "  " + condition, params=email)
         except pymysql.MySQLError as e:
-            printer(f"Error deleting player: {e}","ERROR")
+            printer(f"Error deleting player: {e}", "ERROR")
+            raise TypeError("err")
+
+    def raiseGet(self, opt, val):
+        try:
+            printer("Checking if player exists...")
+            existing_player = self.getplayersByOptions(opt, val)
+            if existing_player is not None:
+                print("ok")
+                raise TypeError("err")
+        except pymysql.MySQLError as es:
+            printer(f"Error create player: {es}", "ERROR")
             raise TypeError("err")

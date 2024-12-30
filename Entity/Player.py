@@ -31,6 +31,7 @@ class Player:
         return self.__email, self.__position, self.__speed, self.__birth, self.__type
 
 
+
     def setByOption(self, opt, value):
         if not isinstance(value, str):
             raise ValueError(f"err")
