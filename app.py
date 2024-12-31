@@ -1,7 +1,8 @@
+import asyncio
 import json
 from flask import Flask, request, jsonify, Response
 
-from Data.mongodb import MongoDB
+from Data.mongodb import *
 from Utils.const import *
 from Utils.Validation import *
 from Utils.converter import from_tuple
@@ -16,7 +17,7 @@ start_docker()
 alchemy = AlchemyService()
 cl = MySqlService()
 cl.createPlayeTBL()
-mongo = MongoDB()
+mongo = AsyncMongoDB()
 mongo.initlz(app)
 
 
@@ -75,6 +76,14 @@ def orm():
             return jsonify({"success": to_dict(alchemy.updatePlayer(request.get_json()))}), 200
         except Exception as ex:
             return jsonify({"success": str(ex)}), 400
+
+
+@app.route('/motor', methods=['POST', 'DELETE', 'GET', 'PUT'])
+def asy():
+    if request.method == 'POST':
+        asyncio.run(mongo.insert_one("gaya", {"name": request, "_id": 1, "age": 22}))
+        result = asyncio.run(mongo.find("gaya", (-1), ("_id",), ("gaya",),True))
+        return jsonify({"succ": result}), 200
 
 
 atexit.register(stop_docker, cl.server.conn, alchemy.getServer())

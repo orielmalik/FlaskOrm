@@ -4,6 +4,8 @@ from datetime import datetime
 from Entity.PlayerAlchemy import PlayerAlchemy, AlchemyEncoder
 from Utils.Validation import *
 from Entity.Player import *
+from Utils.const import mongodb_commands
+from Utils.log.logg import printer
 
 
 def fromTuple(myTuple: tuple):
@@ -12,6 +14,7 @@ def fromTuple(myTuple: tuple):
 
 from datetime import datetime
 import json
+
 
 def string_to_date(date_string):
     """
@@ -80,31 +83,61 @@ def from_json(json_data, required_fields, type=''):
             type=data['type']
         )
 
-def from_tuple(tup,player_type=''):
-        email = tup[0]
-        birth_string = tup[1]  # Birthdate is expected in string format (e.g., "YYYY-MM-DD")
-        position = tup[2]
-        speed = tup[3]
 
-        # Convert birthdate using string_to_date function
-        birth_date = string_to_date(birth_string)
-        if birth_date == "Invalid date format":
-            raise ValueError(f"Invalid birthdate format for email {email}: {birth_string}")
+def from_tuple(tup, player_type=''):
+    email = tup[0]
+    birth_string = tup[1]  # Birthdate is expected in string format (e.g., "YYYY-MM-DD")
+    position = tup[2]
+    speed = tup[3]
 
-        # Assuming the type determines which object to return
-        if player_type == 'alch':
-            return PlayerAlchemy(
-                email=email,
-                position=position,
-                speed=speed,
-                birth=birth_date,
-                type=player_type
-            )
-        else:
-            return Player(
-                email=email,
-                position=position,
-                speed=speed,
-                birth=birth_date,
-                type=player_type
-            )
+    # Convert birthdate using string_to_date function
+    birth_date = string_to_date(birth_string)
+    if birth_date == "Invalid date format":
+        raise ValueError(f"Invalid birthdate format for email {email}: {birth_string}")
+
+    # Assuming the type determines which object to return
+    if player_type == 'alch':
+        return PlayerAlchemy(
+            email=email,
+            position=position,
+            speed=speed,
+            birth=birth_date,
+            type=player_type
+        )
+    else:
+        return Player(
+            email=email,
+            position=position,
+            speed=speed,
+            birth=birth_date,
+            type=player_type
+        )
+
+def create_dict_from_tuples(tuple_a, tuple_b):
+    if len(tuple_a) != len(tuple_b):
+        raise ValueError("Tuples must have the same length")
+    return dict(zip(tuple_a, tuple_b))
+
+def buildMongoDBQuery(opts, fields, values, mytype):
+    dit = {}
+    mytype=mytype.lower().strip()
+    commands = mongodb_commands[mytype]
+    if isinstance(values, tuple) and isinstance(opts, tuple) and isinstance(fields, tuple):
+        if mytype is "update":
+            dit[commands[opts[0]]] = create_dict_from_tuples(fields, values)
+            return dit
+
+        for i in range(len(fields)):
+            if opts[i] >= len(commands) and len(opts) == len(values):
+                printer(f"err index option {i} out of range")
+                raise ValueError(f"ERR ")
+            if mytype is "find":
+                if opts[i] > -1:
+                    dit[fields[i]] = {commands[opts[i] ]: values[i]}#{"age":{$gte:3}}
+                else:
+                    dit[fields[i]] = values[i] #{name:"gaya"
+
+
+
+
+    return dit
