@@ -1,38 +1,48 @@
 version: '3.8'
 
 services:
-  # MySQL service
   mysql:
     image: mysql:5.7
     container_name: mysql-players
     environment:
       MYSQL_ROOT_PASSWORD: navigator
       MYSQL_DATABASE: player_db
-
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 30s
+      retries: 3
+      start_period: 5s
 
-  # MongoDB service
   mongodb:
-    image: mongo:latest
-    container_name: mongodb-container
+    image: mongo:latest  # הגרסה העדכנית ביותר
+    container_name: mongodb
     environment:
-      - 'MONGO_INITDB_DATABASE=dbplayer'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
+      - MONGO_INITDB_DATABASE=dbplayer
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:
       - mongodb_data:/data/db
+      - ./init-mongo-scripts:/docker-entrypoint-initdb.d  # סקריפטים לאיניטיאליזציה
     ports:
       - "27017:27017"
     networks:
       - app_network
+    healthcheck:
+      test: [ "CMD", "mongo", "-u", "root", "-p", "secret", "--eval", "db.adminCommand('ping')", "--quiet" ]
+      interval: 30s
+      retries: 3
+      start_period: 5s
+    command: [ "--storageEngine=wiredTiger" ]  # הגדרת מנוע אחסון
 
 networks:
   app_network:
+    driver: bridge
 
 volumes:
   mysql_data:

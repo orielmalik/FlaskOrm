@@ -13,7 +13,7 @@ def start_docker():
 
 
 
-def stop_docker(conn, alch):
+def stop_docker(conn=None, alch=None):
     print("Stopping Docker containers...")
     if isinstance(conn, pymysql.connect) and is_connection_active(conn) :
         conn.close()

@@ -56,6 +56,9 @@ def from_json(json_data, required_fields, type=''):
     if not isinstance(required_fields, list) or not isinstance(data.get('speed'), float):
         raise ValueError("err")
 
+    if not validate_email(data.get('email')):
+        raise ValueError("err")
+
     for field in required_fields:
         if field not in data:
             print(field)
@@ -123,7 +126,7 @@ def buildMongoDBQuery(opts, fields, values, mytype):
     mytype=mytype.lower().strip()
     commands = mongodb_commands[mytype]
     if isinstance(values, tuple) and isinstance(opts, tuple) and isinstance(fields, tuple):
-        if mytype is "update":
+        if mytype == "update":
             dit[commands[opts[0]]] = create_dict_from_tuples(fields, values)
             return dit
 
@@ -131,7 +134,7 @@ def buildMongoDBQuery(opts, fields, values, mytype):
             if opts[i] >= len(commands) and len(opts) == len(values):
                 printer(f"err index option {i} out of range")
                 raise ValueError(f"ERR ")
-            if mytype is "find":
+            if mytype == "find":
                 if opts[i] > -1:
                     dit[fields[i]] = {commands[opts[i] ]: values[i]}#{"age":{$gte:3}}
                 else:

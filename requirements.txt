@@ -1,2 +1,12 @@
 pymongo[srv]
 Flask-PyMongo
+PyMySQL~=1.1.1
+motor~=3.6.0
+Flask~=3.1.0
+Quart~=0.20.0
+cryptography~=44.0.0
+pytest~=8.3.4
+requests~=2.32.3
+validators~=0.34.0
+phonenumbers~=8.13.52
+SQLAlchemy~=2.0.36
