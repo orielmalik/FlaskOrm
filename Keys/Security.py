@@ -35,9 +35,8 @@ queries_directory = os.path.join(project_dir, "Queries")
 
 
 
-
 #for _file in os.listdir(queries_directory):
-        #if _file.lower().endswith(".txt"):
+        #if _file.lower() =="select.txt":
             #write_key_from_file(encrypt_message(readTextFile(os.path.join(queries_directory, _file))),
                                 #os.path.join(queries_directory, _file))
 

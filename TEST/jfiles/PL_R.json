@@ -1,7 +1,44 @@
-  {
-                "email": "playerl@example.com",
-                "position": "forward",
-                "speed": 10.5,
-                "birth": "1990-01-02",
-                "type": "type1"
-   }
+[
+    {
+        "email": "playerl@example.com",
+        "position": "forward",
+        "speed": 10.5,
+        "birth": "1990-01-02",
+        "type": "type1"
+    },
+    {
+        "email": "player2@example.com",
+        "position": "midfielder",
+        "speed": 12.3,
+        "birth": "1988-04-15",
+        "type": "type2"
+    },
+    {
+        "email": "player3@example.com",
+        "position": "defender",
+        "speed": 8.7,
+        "birth": "1992-06-10",
+        "type": "type3"
+    },
+    {
+        "email": "player4@example.com",
+        "position": "goalkeeper",
+        "speed": 6.4,
+        "birth": "1995-11-20",
+        "type": "type4"
+    },
+    {
+        "email": "player5@example.com",
+        "position": "forward",
+        "speed": 11.2,
+        "birth": "1987-08-30",
+        "type": "type5"
+    },
+    {
+        "email": "player6@example.com",
+        "position": "midfielder",
+        "speed": 9.0,
+        "birth": "1991-12-11",
+        "type": "type6"
+    }
+]

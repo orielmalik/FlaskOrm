@@ -19,26 +19,6 @@ services:
       retries: 3
       start_period: 5s
 
-  mongodb:
-    image: mongo:latest  # הגרסה העדכנית ביותר
-    container_name: mongodb
-    environment:
-      - MONGO_INITDB_DATABASE=dbplayer
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=secret
-    volumes:
-      - mongodb_data:/data/db
-      - ./init-mongo-scripts:/docker-entrypoint-initdb.d  # סקריפטים לאיניטיאליזציה
-    ports:
-      - "27017:27017"
-    networks:
-      - app_network
-    healthcheck:
-      test: [ "CMD", "mongo", "-u", "root", "-p", "secret", "--eval", "db.adminCommand('ping')", "--quiet" ]
-      interval: 30s
-      retries: 3
-      start_period: 5s
-    command: [ "--storageEngine=wiredTiger" ]  # הגדרת מנוע אחסון
 
 networks:
   app_network:
@@ -47,5 +27,4 @@ networks:
 volumes:
   mysql_data:
     driver: local
-  mongodb_data:
-    driver: local
+

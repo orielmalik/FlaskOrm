@@ -70,5 +70,17 @@ def writeExistTextFile(file_name, search_root=".", content=""):
 
 def insertJson(dir_):
     with open(dir_, "r", encoding="utf-8") as file:
-        print(dir_)
-        return json.load(file)
+        content = file.read().strip()
+
+        if content:
+            try:
+                if content.startswith("{"):
+                    data = json.loads(content)
+                elif content.startswith("["):
+                    data = json.loads(content)
+            except json.JSONDecodeError:
+                print("הייתה שגיאה בהבנת תוכן ה-JSON")
+            return data
+        else:
+            return None
+

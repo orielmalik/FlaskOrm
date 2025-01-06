@@ -1,0 +1,10 @@
+2025-01-06 18:14:14,808 - app_logger - WARNING - [<function create_insert_json.<locals>.<lambda> at 0x0000013E9713B490>, <function create_insert_json.<locals>.<lambda> at 0x0000013E9713B520>, <function create_insert_json.<locals>.<lambda> at 0x0000013E9713B5B0>, [{'email': 'playerl@example.com', 'position': 'forward', 'speed': 10.5, 'birth': '1990-01-02', 'type': 'type1'}, {'email': 'player2@example.com', 'position': 'midfielder', 'speed': 12.3, 'birth': '1988-04-15', 'type': 'type2'}, {'email': 'player3@example.com', 'position': 'defender', 'speed': 8.7, 'birth': '1992-06-10', 'type': 'type3'}, {'email': 'player4@example.com', 'position': 'goalkeeper', 'speed': 6.4, 'birth': '1995-11-20', 'type': 'type4'}, {'email': 'player5@example.com', 'position': 'forward', 'speed': 11.2, 'birth': '1987-08-30', 'type': 'type5'}, {'email': 'player6@example.com', 'position': 'midfielder', 'speed': 9.0, 'birth': '1991-12-11', 'type': 'type6'}]]
+2025-01-06 18:15:19,686 - app_logger - WARNING - 4
+2025-01-06 18:16:05,958 - app_logger - WARNING - 4
+2025-01-06 18:29:25,425 - app_logger - WARNING - 4
+2025-01-06 18:34:49,957 - app_logger - WARNING - 7
+2025-01-06 18:34:49,958 - app_logger - WARNING - 7
+2025-01-06 18:40:53,162 - app_logger - WARNING - 7
+2025-01-06 18:40:53,163 - app_logger - WARNING - 7
+2025-01-06 18:41:05,168 - app_logger - WARNING - 7
+2025-01-06 18:41:05,168 - app_logger - WARNING - 7
